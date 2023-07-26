@@ -8,6 +8,8 @@ authors = ["adam.ulring <adam.ulring@yokkal.com>"]
 python = "^3.10"
 pydantic = "^2.1.0"
 Jinja2 = "^3.1.2"
+sqlmodel = {git = "https://github.com/th33ngineers/sqlmodel.git", rev = "2abfaa2"}
+
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

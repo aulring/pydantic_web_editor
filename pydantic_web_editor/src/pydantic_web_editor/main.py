@@ -1,13 +1,22 @@
 import os
 import shutil
 from enum import Enum
-from typing import List, Optional, Type
+from typing import List, Optional, Type, get_type_hints
 
 from jinja2 import Environment, PackageLoader
-from pydantic import BaseModel
+from pydantic import BaseModel, create_model
+from sqlmodel import SQLModel
+
 
 ENV = Environment(loader=PackageLoader("pydantic_web_editor"))
 EDITOR_TEMPLATE = ENV.get_template("pydantic_web_editor.html")
+
+
+def sqlmodel_to_pydantic(sql_model: Type[SQLModel]) -> Type[BaseModel]:
+    type_hints = get_type_hints(sql_model)
+    Model = create_model("Model", **type_hints)
+    instance = Model(**sql_model.model_dump())
+    return instance
 
 
 def copy_static_folder(copy_path: str):
