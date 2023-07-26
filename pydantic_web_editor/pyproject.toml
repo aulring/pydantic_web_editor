@@ -2,7 +2,7 @@
 name = "pydantic_web_editor"
 version = "0.1.0"
 description = ""
-authors = ["adam.ulring <adam.ulring@yokkal.com>"]
+authors = ["adam.ulring <adam.ulring1@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
