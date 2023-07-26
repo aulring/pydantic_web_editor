@@ -1,0 +1,26 @@
+{
+  "name": "pydantic_web_editor",
+  "version": "1.0.0",
+  "description": "A resusable, installable and extrapolatable example of leveraging Pydantic for easy web for generation",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production"
+  },
+  "author": "adam.ulring@yokkal.com",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^6.8.1",
+    "jquery": "^3.7.0",
+    "jquery-ui": "^1.13.2",
+    "mini-css-extract-plugin": "^2.7.6",
+    "tailwind": "^4.0.0",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@json-editor/json-editor": "^2.10.1",
+    "bootstrap": "^5.3.0",
+    "htmx.org": "^1.9.4"
+  },
+  "keywords": []
+}
