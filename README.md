@@ -2,5 +2,4 @@
 A resusable, installable and extrapolatable example of leveraging Pydantic for easy web form generation
 
 
-
-
+#TODO make static file configurable
