@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List
+from typing import List, Optional
 
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
@@ -22,11 +22,12 @@ class Student(BaseModel):
     name: str = Field(description="Name of the student.")
     classes: List[str]
     hobby: Hobby
+    homework: Optional[bool] = None
 
 
 @app.get("/")
 def hello():
-    web_editor_config = WebEditorConfig(title="Example Pydantic Editor", model=Student)
+    web_editor_config = WebEditorConfig(title="Example Pydantic Editor", model=Student, start_val=Student(name="Ruth", classes=["chemistry", "math"], hobby=Hobby("netflix")).model_dump())
     return HTMLResponse(web_editor_config.html)
 
 
