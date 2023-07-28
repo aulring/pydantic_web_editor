@@ -1,12 +1,4 @@
 [[package]]
-name = "annotated-types"
-version = "0.5.0"
-description = "Reusable constraint types to use with typing.Annotated"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[[package]]
 name = "atomicwrites"
 version = "1.4.1"
 description = "Atomic file writes."
@@ -108,30 +100,18 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "pydantic"
-version = "2.1.1"
-description = "Data validation using Python type hints"
+version = "1.10.12"
+description = "Data validation and settings management using python type hints"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 
 [package.dependencies]
-annotated-types = ">=0.4.0"
-pydantic-core = "2.4.0"
-typing-extensions = ">=4.6.1"
+typing-extensions = ">=4.2.0"
 
 [package.extras]
-email = ["email-validator (>=2.0.0)"]
-
-[[package]]
-name = "pydantic-core"
-version = "2.4.0"
-description = ""
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[package.dependencies]
-typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
+dotenv = ["python-dotenv (>=0.10.4)"]
+email = ["email-validator (>=1.0.3)"]
 
 [[package]]
 name = "pytest"
@@ -200,23 +180,16 @@ typing-extensions = ">=3.7.4"
 
 [[package]]
 name = "sqlmodel"
-version = "0"
+version = "0.0.8"
 description = "SQLModel, SQL databases in Python, designed for simplicity, compatibility, and robustness."
 category = "main"
 optional = false
-python-versions = "^3.7.0"
-develop = false
+python-versions = ">=3.6.1,<4.0.0"
 
 [package.dependencies]
-pydantic = "^2.0.0"
+pydantic = ">=1.8.2,<2.0.0"
 SQLAlchemy = ">=1.4.17,<=1.4.41"
 sqlalchemy2-stubs = "*"
-
-[package.source]
-type = "git"
-url = "https://github.com/th33ngineers/sqlmodel.git"
-reference = "2abfaa2"
-resolved_reference = "2abfaa2fe825beb28a87811b2b7545bc008fe313"
 
 [[package]]
 name = "typing-extensions"
@@ -237,10 +210,9 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "d6adec05102535353c0e31ece1405f3e309bd111c07992e59a9d954fae38b4be"
+content-hash = "e485de09d931f680ecac8f853b72d99a8848b58f0eeab2cb36ca4051e06db403"
 
 [metadata.files]
-annotated-types = []
 atomicwrites = []
 attrs = []
 colorama = []
@@ -258,7 +230,6 @@ py = [
     {file = "py-1.11.0.tar.gz", hash = "sha256:51c75c4126074b472f746a24399ad32f6053d1b34b68d2fa41e558e6f4a98719"},
 ]
 pydantic = []
-pydantic-core = []
 pytest = []
 sqlalchemy = [
     {file = "SQLAlchemy-1.4.41-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:13e397a9371ecd25573a7b90bd037db604331cf403f5318038c46ee44908c44d"},
