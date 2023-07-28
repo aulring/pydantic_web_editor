@@ -27,7 +27,7 @@ class Student(BaseModel):
 
 @app.get("/")
 def hello():
-    web_editor_config = WebEditorConfig(title="Example Pydantic Editor", model=Student, start_val=Student(name="Ruth", classes=["chemistry", "math"], hobby=Hobby("netflix")).model_dump())
+    web_editor_config = WebEditorConfig(title="Example Pydantic Editor", model=Student, start_val=Student(name="Ruth", classes=["chemistry", "math"], hobby=Hobby("netflix")).dict())
     return HTMLResponse(web_editor_config.html)
 
 

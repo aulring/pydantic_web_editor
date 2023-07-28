@@ -13,9 +13,11 @@
     crossorigin="anonymous"></script>
 {% elif load_static == "skip" %}
 // load_static=skip required libraries were not loaded... which means they must be loaded elsewhere...
-{% else %}
+{% elif load_static == "bundled" %}
 <script src="/{{static_mount}}/bundle.js"></script>
 <link rel="stylesheet" href="/{{static_mount}}/bundle.css">
+{% else %}
+<H6>Woah, how is that possible? You broke something.</H6>
 {% endif %}
 
 <style>
@@ -27,7 +29,6 @@
     }
 </style>
     
-
 <div id='pydantic_web_editor'></div>
 {% for button in buttons %}
 <div class="{{ button.div_classes }}">
@@ -41,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     JSONEditor.defaults.iconlib = "{{ iconlib }}";
     var editor = new JSONEditor(document.getElementById('pydantic_web_editor'), {{ json_editor_config| tojson }});
 
+    //TODO implement config for showing form errors.
     editor.on('change', function () {
         // Get an array of errors from the validator
         var errors = editor.validate();

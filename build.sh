@@ -3,7 +3,7 @@
 set -euo pipefail
 
 cd pydantic_web_editor_webpack
-npm run build --production
+npm run build --omit=dev
 cd $OLDPWD
 cp -r pydantic_web_editor_webpack/statics/* pydantic_web_editor/src/pydantic_web_editor/static/
 cd pydantic_web_editor

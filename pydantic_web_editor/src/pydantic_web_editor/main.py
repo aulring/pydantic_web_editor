@@ -1,32 +1,32 @@
 import os
 import shutil
 from enum import Enum
-from typing import List, Optional, Type, get_type_hints, Any
+from typing import List, Optional, Type, get_type_hints
 
 from jinja2 import Environment, PackageLoader
 from pydantic import BaseModel, create_model
-#from sqlmodel import SQLModel
+from sqlmodel import SQLModel
 
 
 ENV = Environment(loader=PackageLoader("pydantic_web_editor"))
 EDITOR_TEMPLATE = ENV.get_template("pydantic_web_editor.html")
 
 
-def sqlmodel_to_pydantic(sql_model: Type[Any]) -> Type[BaseModel]:
+def sqlmodel_to_pydantic(sql_model: Type[SQLModel]) -> Type[BaseModel]:
     type_hints = get_type_hints(sql_model)
     Model = create_model("Model", **type_hints)
-    instance = Model(**sql_model.model_dump())
+    instance = Model(**sql_model.dict())
     return instance
 
 
-def copy_static_folder(copy_path: str):
+def copy_static_folder(copy_path: str, create: bool = False):
     """
     Recursively copy a static folder from a pip package to a static folder on a relative path.
 
     Parameters:
-        package_name (str): The name of the pip package containing the static folder.
-        source_folder (str): The relative path of the static folder inside the pip package.
         copy_path: str (str): The relative path where the static folder will be copied.
+        create: bool: If True, the directory structure is created if it does not exist.
+                      If False and the directory does not exist, a ValueError is raised.
 
     Returns:
         None
@@ -35,8 +35,12 @@ def copy_static_folder(copy_path: str):
     package_path = os.path.dirname(__import__("pydantic_web_editor").__file__)
     static_path = os.path.join(package_path, "static")
 
+    # Check if the destination directory exists, create if necessary and allowed
     if not os.path.exists(copy_path):
-        raise ValueError(f"Copy destination: {copy_path} does not exist!")
+        if create:
+            os.makedirs(copy_path, exist_ok=True)
+        else:
+            raise ValueError(f"Copy destination: {copy_path} does not exist!")
 
     shutil.copytree(static_path, copy_path, dirs_exist_ok=True)
 
@@ -76,7 +80,7 @@ class WebEditorConfig(BaseModel):
     buttons: Optional[List[Button]] = []
     theme: Optional[str] = "bootstrap5"
     iconlib: Optional[str] = "jqueryui"
-    load_static: Optional[LoadStaticType] = LoadStaticType.BUNDLED
+    load_static: Optional[LoadStaticType] = LoadStaticType.REMOTE
     static_mount: Optional[str] = "static"
     json_editor_config: Optional[dict] = JSON_EDITOR_CONFIG_DEFAULT
 
@@ -90,7 +94,7 @@ class WebEditorConfig(BaseModel):
             buttons=self.buttons,
             json_editor_config={
                 "title": self.title,
-                "schema": self.model.model_json_schema(),
+                "schema": self.model.schema(),
                 "startval": self.start_val,
                 "config": self.json_editor_config,
             },
