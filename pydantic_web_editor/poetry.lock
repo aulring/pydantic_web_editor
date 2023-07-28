@@ -136,6 +136,17 @@ checkqa-mypy = ["mypy (==v0.761)"]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
+name = "schorg"
+version = "0.7.5"
+description = "Pydantic classes for Schema.org."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+pydantic = ">=1.8.2,<2.0.0"
+
+[[package]]
 name = "sqlalchemy"
 version = "1.4.41"
 description = "Database Abstraction Library"
@@ -210,7 +221,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "e485de09d931f680ecac8f853b72d99a8848b58f0eeab2cb36ca4051e06db403"
+content-hash = "7581eb571c6ea88404c96eed8a584ea75b769778b66b05d0cbf77f3cbfe1cddf"
 
 [metadata.files]
 atomicwrites = []
@@ -231,6 +242,7 @@ py = [
 ]
 pydantic = []
 pytest = []
+schorg = []
 sqlalchemy = [
     {file = "SQLAlchemy-1.4.41-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:13e397a9371ecd25573a7b90bd037db604331cf403f5318038c46ee44908c44d"},
     {file = "SQLAlchemy-1.4.41-cp27-cp27m-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:2d6495f84c4fd11584f34e62f9feec81bf373787b3942270487074e35cbe5330"},
