@@ -7,7 +7,7 @@ authors = ["adam.ulring <adam.ulring1@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 Jinja2 = "^3.1.2"
-pydantic = "^2.1.1"
+pydantic = "2.0.0"
 
 
 [tool.poetry.dev-dependencies]
