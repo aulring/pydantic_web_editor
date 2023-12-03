@@ -1,10 +1,12 @@
 import os
+import json
 import shutil
 from enum import Enum
-from typing import List, Optional, Type, get_type_hints
+from typing import List, Optional, Type, get_type_hints, Any, Union
 
 from jinja2 import Environment, PackageLoader
-from pydantic import BaseModel, create_model
+from pydantic import BaseModel, create_model, TypeAdapter
+
 # from sqlmodel import SQLModel
 
 
@@ -99,3 +101,73 @@ class WebEditorConfig(BaseModel):
                 "config": self.json_editor_config,
             },
         )
+
+import json
+
+def parse_json_schema(schema, base_path="#"):
+    elements = []
+
+    def parse_object(obj, path):
+        if 'properties' in obj:
+            for prop, value in obj['properties'].items():
+                new_path = f"{path}/properties/{prop}"
+                elements.append({
+                    "type": "Control",
+                    "scope": new_path,
+                    "label": prop
+                })
+                parse_object(value, new_path)
+        elif 'items' in obj and isinstance(obj['items'], dict):  # For arrays
+            # Handle $ref in items
+            if '$ref' in obj['items']:
+                ref_path = obj['items']['$ref']
+                ref_obj = resolve_ref(schema, ref_path)
+                parse_object(ref_obj, path)
+            else:
+                parse_object(obj['items'], path)
+
+    def resolve_ref(schema, ref_path):
+        # Resolve a $ref to the actual object it refers to
+        parts = ref_path.split('/')[1:]  # Skip the leading '#'
+        ref_obj = schema
+        for part in parts:
+            ref_obj = ref_obj[part]
+        return ref_obj
+
+    # Start parsing from the root
+    parse_object(schema, base_path)
+
+    return {
+        "type": "VerticalLayout",
+        "elements": elements
+    }
+
+
+
+class WebEditorConfig2(BaseModel):
+    title: str
+    model: Union[BaseModel, Any]
+    static_mount: str = "static"
+    ui_schema: Optional[str] = None
+    gen_ui_schema: Optional[bool] = None
+
+    @property
+    def html(self):
+        if issubclass(self.model, BaseModel):
+            schema = self.model.model_json_schema()
+        elif isinstance(self.model, TypeAdapter):
+            schema =  self.model.json_schema()
+        else:
+            raise ValueError("can only generate schema from BaseModel or TypeAdapter")
+        
+        if self.gen_ui_schema:
+            ui_schema = parse_json_schema(schema=schema)
+            
+        return EDITOR_TEMPLATE.render(
+            title=self.title,
+            json_schema=schema,
+            static_mount=self.static_mount,
+            #ui_schema=self.ui_schema,
+        )
+
+

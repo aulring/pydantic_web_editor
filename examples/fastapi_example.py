@@ -14,13 +14,17 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 copy_static_folder(copy_path="static")
 
 
-
 @app.get("/")
 def hello():
-    web_editor_config = WebEditorConfig(title="Example Pydantic Editor demoing Schema Org's About Page", model=AboutPage, start_val={})
+    web_editor_config = WebEditorConfig(
+        title="Example Pydantic Editor demoing Schema Org's About Page",
+        model=AboutPage,
+        start_val={},
+    )
     return HTMLResponse(web_editor_config.html)
 
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
